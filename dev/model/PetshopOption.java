@@ -1,11 +1,11 @@
 package dev.model;
 
-public class PetshopStoreOption implements Comparable<PetshopStoreOption> {
+public class PetshopOption implements Comparable<PetshopOption> {
     
     private Petshop store;
     private double totalValue;
 
-    public PetshopStoreOption(Petshop store, double totalValue) {
+    public PetshopOption(Petshop store, double totalValue) {
 
         this.store = store;
         this.totalValue = totalValue;
@@ -29,7 +29,7 @@ public class PetshopStoreOption implements Comparable<PetshopStoreOption> {
     }
 
     @Override
-    public int compareTo(PetshopStoreOption option) {
+    public int compareTo(PetshopOption option) {
 
         if (this.totalValue < option.getTotalValue()) {
 

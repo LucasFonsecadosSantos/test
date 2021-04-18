@@ -25,12 +25,6 @@ public class Input {
 
     }
 
-    private void setDate(Date date) { this.date = date; }
-
-    private void setSmallDogAmount(int amount) { this.smallDogAmount = amount; }
-
-    private void setBigDogAmount(int amount) { this.bigDogAmount = amount; }
-
     public Date getDate() { return this.date; }
 
     public int getSmallDogAmount() { return this.smallDogAmount; }
@@ -41,5 +35,11 @@ public class Input {
     public String toString() {
         return "Date: " + this.getDate() + "\nSmall Dog Amount: " + this.getSmallDogAmount() + "\nBig Dog Amount: " + this.getBigDogAmount();
     }
+
+    private void setDate(Date date) { this.date = date; }
+
+    private void setSmallDogAmount(int amount) { this.smallDogAmount = amount; }
+
+    private void setBigDogAmount(int amount) { this.bigDogAmount = amount; }
 
 }

@@ -1,20 +1,18 @@
 package dev.core;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.lang.Exception;
 import java.util.List;
 
 import dev.model.Petshop;
-import dev.model.PetshopStoreOption;
+import dev.model.PetshopOption;
+import dev.util.DateUtils;
 import dev.util.Input;
 
 public class ApplicationProcessor {
     
-    private List<Petshop> petshopStores;
+    private List<Petshop> petshops;
 
     public ApplicationProcessor() {}
 
@@ -22,7 +20,6 @@ public class ApplicationProcessor {
 
         try {
 
-            this.validate(input);
             return moreViablePetshop(input);
 
         } catch (Exception e) {
@@ -33,38 +30,32 @@ public class ApplicationProcessor {
 
     }
 
-   private String moreViablePetshop(Input input) {
+    public void setPetshops(List<Petshop> petshops) {
 
-        List<PetshopStoreOption> options = new ArrayList<PetshopStoreOption>();
+        this.petshops = petshops;
 
-        if (this.isWeekend(input.getDate())) {
+    }
 
-            for (Petshop store : this.petshopStores) {
-            
-                options.add(
-                    new PetshopStoreOption(
-                        store,
-                        store.getSmallDogBathPriceOnWeekend() * input.getSmallDogAmount() +
-                        store.getBigDogBathPriceOnWeekend() * input.getBigDogAmount()
-                    )
-                );
-            
-            }
+    private double getSmallDogPrice(Input input, Petshop store) {
 
-        } else {
+        return (DateUtils.isWeekend(input.getDate()))   ? store.getSmallDogBathPriceOnWeekend()   : store.getSmallDogBathPrice();
 
-            for (Petshop store : this.petshopStores) {
+    }
 
-                options.add(
-                    new PetshopStoreOption(
-                        store,
-                        store.getSmallDogBathPrice() * input.getSmallDogAmount() +
-                        store.getBigDogBathPrice() * input.getBigDogAmount()
-                    )
-                );
+    private String moreViablePetshop(Input input) {
 
-            }
+        List<PetshopOption> options = new ArrayList<PetshopOption>();
 
+        for (Petshop store : this.petshops) {
+
+            options.add(
+                new PetshopOption(
+                    store,
+                    this.getSmallDogPrice(input, store) * input.getSmallDogAmount() +
+                    this.getBigDogPrice(input, store) * input.getBigDogAmount()
+                )
+            );
+        
         }
 
         Collections.sort(options);
@@ -73,37 +64,9 @@ public class ApplicationProcessor {
 
     }
 
-    private void validate(Input input) throws Exception {
+    private double getBigDogPrice(Input input, Petshop store) {
 
-        if (input.getDate().before(new Date())) {
-            throw new Exception("The date entered cannot be earlier than today.");
-        };
-
-        if (input.getSmallDogAmount() < 0) {
-            throw new Exception("The amount of small dog can't be less then 0 (zero). Please, try with another value.");
-        }
-
-        if (input.getBigDogAmount() < 0) {
-            throw new Exception("The amount of big dog can't be less then 0 (zero). Please, try with another value.");
-        }
-
-    }
-
-    private boolean isWeekend(Date date) {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-
-        return (
-            calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY ||
-            calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
-        );
-
-    }
-
-    public void setPetshopStores(List<Petshop> petshopStores) {
-
-        this.petshopStores = petshopStores;
+        return (DateUtils.isWeekend(input.getDate()))   ? store.getBigDogBathPriceOnWeekend()     : store.getBigDogBathPrice();
 
     }
 

@@ -12,4 +12,6 @@ public class Cli {
 
     public static void message(String message) { System.out.println(message); }
 
+    public static void errorMessage(String error) { System.out.println("[ !! ] " + error); }
+
 }
