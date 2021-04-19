@@ -7,8 +7,28 @@ import java.util.Arrays;
 import dev.model.Petshop;
 import dev.model.PricePolicy;
 
+/**
+ * 
+ * PETSHOP TEST PROJECT FOR DTI - Digital
+ * Written by Lucas Fonseca dos Santos
+ * github.com/LucasFonscaDosSantos
+ * 
+ * This class is responsible for any data access, 
+ * required by the software. 
+ * 
+ * @version 1.0 - SNAPSHOT
+ * @author Lucas Fonseca dos Santos
+ * 
+ */
 public class ApplicationDataLoader {
     
+    /**
+     * 
+     * Responsible for retriving a petshops predefined
+     * statically here.
+     * 
+     * @return List An array list structure with petshops,
+     */
     public List<Petshop> getPetshops() {
 
         return new ArrayList<Petshop>(Arrays.asList(
